@@ -1,19 +1,25 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config'; 
+import { ConfigModule, ConfigService } from '@nestjs/config'; 
 import { EmailController } from './email.controller';
 import { EmailService } from './email.service';
 import { MailerModule } from '@nestjs-modules/mailer'
 
 
+
 @Module({
-  imports:[ConfigModule, MailerModule.forRoot({
-    transport: {
-      host: 'smtp.sendgrid.net',
-      auth: {
-        user: 'apikey',
-        pass: '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'
+  imports:[ConfigModule, MailerModule.forRootAsync({
+    imports: [ConfigModule],
+    useFactory: (configService: ConfigService) => ({
+      transport: {
+        host: 'smtp.sendgrid.net',
+        auth: {
+          user: 'apikey',
+          pass: configService.get<string>('sendgridApi')
+        }
       }
-    }
+    }),
+    inject: [ConfigService],
+    
   })],
   controllers: [EmailController],
   providers: [EmailService],
