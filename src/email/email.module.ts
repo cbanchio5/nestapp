@@ -11,9 +11,9 @@ import { MailerModule } from '@nestjs-modules/mailer'
     imports: [ConfigModule],
     useFactory: (configService: ConfigService) => ({
       transport: {
-        host: 'smtp.sendgrid.net',
+        host: configService.get<string>('sendgridHost'),
         auth: {
-          user: 'apikey',
+          user: configService.get<string>('sendgridUser'),
           pass: configService.get<string>('sendgridApi')
         }
       }
