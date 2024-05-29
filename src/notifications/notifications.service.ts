@@ -6,6 +6,7 @@ import { NotificationStrategy } from './interfaces/notification-strategy.interfa
 import { SlackNotification } from './strategies/slack-notification-strategy';
 import { EmailNotification } from './strategies/email-notification-strategy';
 import { TopicTypes } from './topic-types';
+import { EmailService } from 'src/email/email.service';
 
 
 
@@ -17,7 +18,7 @@ export class NotificationsService {
         email: new EmailNotification(),
       } ;
     
-    constructor(@InjectRepository(Notification) private repo: Repository<Notification>) {
+    constructor(@InjectRepository(Notification) private repo: Repository<Notification>, private readonly emailService: EmailService) {
         this.repo = repo;
         
     }
@@ -28,6 +29,9 @@ export class NotificationsService {
         }
 
         if(topic == TopicTypes.Pricing) {
+            this.emailService.send()
+            this.emailService.sendMail()
+            
             return this.strategies.email
         }
 

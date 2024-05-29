@@ -5,9 +5,10 @@ import { NotificationsController } from './notifications.controller';
 import { NotificationsService } from './notifications.service';
 import { Notification } from './notification.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EmailModule } from 'src/email/email.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Notification]), BullModule.forRootAsync({
+  imports: [EmailModule, TypeOrmModule.forFeature([Notification]), BullModule.forRootAsync({
     imports: [ConfigModule],
     useFactory: async (configService: ConfigService) => ({
     }),
