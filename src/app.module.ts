@@ -7,6 +7,7 @@ import { Notification } from './notifications/notification.entity';
 import {config} from 'src/config/config'
 import { ConfigModule } from '@nestjs/config';
 import { EmailModule } from './email/email.module';
+import { SlackModule } from './slack/slack.module';
 
 
 
@@ -20,7 +21,7 @@ import { EmailModule } from './email/email.module';
     isGlobal: true,
     load: [config]
 
-  }), EmailModule],
+  }), EmailModule, SlackModule],
   controllers: [AppController, ],
   providers: [AppService, ],
 })

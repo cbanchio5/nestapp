@@ -13,8 +13,8 @@ export class NotificationsController {
     @Post()
     createNotification(@Body() body:CreateNotificationDto) {
 
-        this.notificationService.create(body.topic, body.description)
-        const strategy = this.notificationService.getStrategy(body.topic);
+        //this.notificationService.create(body.topic, body.description)
+        const strategy = this.notificationService.getStrategy(body.topic, body.description);
         strategy.send(body.description)
 
     }
