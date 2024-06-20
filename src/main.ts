@@ -16,5 +16,6 @@ async function bootstrap() {
     whitelist:true
   }))
   await app.listen(port);
+  console.log(`listening on ${port}`)
 }
 bootstrap();

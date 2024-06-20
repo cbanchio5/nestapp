@@ -4,25 +4,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
 import { NotificationStrategy } from './interfaces/notification-strategy.interface';
 import { TopicTypes } from './topic-types';
-import { EmailService } from 'src/email/email.service';
-import { SlackService } from 'src/slack/slack.service';
-import { SlackNotification } from './strategies/slack-notification-strategy';
-import { EmailNotification } from './strategies/email-notification-strategy';
-
-
-
+import { EmailService } from './email/email.service';
+import { SlackService } from './slack/slack.service';
 
 @Injectable()
 export class NotificationsService {
     
-    private strategies: { [key: string]: NotificationStrategy } = {
-        slack: new SlackNotification(),
-        email: new EmailNotification(),
-      } ;
-
-     
-      
-   
     
     constructor(@InjectRepository(Notification) private repo: Repository<Notification>, 
     private readonly emailService: EmailService,
@@ -32,17 +19,16 @@ export class NotificationsService {
         
     }
 
-    getStrategy(topic: TopicTypes, description:string): NotificationStrategy {
+    getStrategy(topic: TopicTypes, description:string) {
         if(topic == TopicTypes.Sales) {
-            this.slackService.send(description)
-             return this.strategies.slack
+            return this.slackService.send(description)
+             
         }
 
         if(topic == TopicTypes.Pricing) {
-            this.emailService.send(description)
-            
-            
-            return this.strategies.email
+           return this.emailService.send(description)
+        
+          
         }
 
         throw new BadRequestException('Topic is not valid')

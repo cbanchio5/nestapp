@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notiapp
+  template:
+    metadata:
+      labels:
+        app: notiapp
+    spec:
+      containers:
+        - name: notiapp
+          image: nestjs-app
+          imagePullPolicy: Never        
+  

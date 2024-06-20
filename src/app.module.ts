@@ -6,8 +6,8 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { Notification } from './notifications/notification.entity';
 import {config} from 'src/config/config'
 import { ConfigModule } from '@nestjs/config';
-import { EmailModule } from './email/email.module';
-import { SlackModule } from './slack/slack.module';
+import { EmailModule } from './notifications/email/email.module';
+import { SlackModule } from './notifications/slack/slack.module';
 
 
 

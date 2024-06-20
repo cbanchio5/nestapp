@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MailerService } from '@nestjs-modules/mailer';
 import { NotificationStrategy } from 'src/notifications/interfaces/notification-strategy.interface';
@@ -10,7 +10,7 @@ export class EmailService implements NotificationStrategy{
 
     
 
-    async send(description: string) {
+    async send(description: string)  {
         try {
             await this.mailerService.sendMail({
                 to:'cesar.b@landbot.io',
@@ -20,12 +20,12 @@ export class EmailService implements NotificationStrategy{
             })
 
         } catch(e) {
-            console.log(e)
+            throw new InternalServerErrorException("Ops, there has been a problem with your request")
         }
         
 
         console.log("Email sent")
-        return "done"
+        return 
         
     }
 
